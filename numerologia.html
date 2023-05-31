@@ -1,0 +1,65 @@
+<html>
+	<head>
+		<script type="text/javascript" src="numerologia.js"></script>
+		<title>Numerologia</title>
+	</head>
+	<body>
+		<table align="center"border="0" width="800">
+			<tr align="center">
+				<td width="400">
+					<p style="font-size:20" style="text-decoration:bold">
+						Escriba su nombre completo del documento de identidad
+					</p>
+				</td>
+				<td width="400">
+					<p style="font-size:20">
+						Indique su fecha de nacimiento
+					</p>
+				</td>
+			</tr>
+			<tr align="center">
+				<td>
+					<p>
+						Si fue adoptado o lleva otro apellido que no es el de su padre biologico, analice solo un apellido a la vez y vea cual es mas coherente con su persona
+					</p>
+				</td>
+				<td></td>
+			</tr>
+			<tr align="center">
+				<td>
+					<input type="text" onclick="textBox()" size="40" style="color:gray" value="Ej: Juan Jose Farina, Pablo Sanchez, Maria del Campo,etc." id="nombreCompleto">
+				</td>
+				<td>
+					Dia:
+					<script language="javascript">
+						document.write("<select id=dia>");
+						for(x = 1; x < 32; x++) {
+							document.write("<option>" + x + "</option>");
+						}
+						document.write("</select>");
+					</script>
+					Mes:
+					<script language="javascript">
+						document.write("<select id=mes>");
+						for(x = 1; x < 13; x++) {
+							document.write("<option>" + x + "</option>");
+						}
+						document.write("</select>");
+					</script>
+					Año:
+					<script language="javascript">
+						document.write("<select id=ano>");
+						for(x = 2015; x > 0; x--) {
+							document.write("<option>" + x + "</option>");
+						}
+						document.write("</select>");
+					</script>
+				</td>
+			</tr>
+			<tr align="center">
+				<td colspan="2"><input type="button" value="Procesar" id="procesar()" onclick="Procesar()"></td>
+			</tr>
+		</table>
+		<div align="center" id="canvas"></div>
+	</body>
+</html>
