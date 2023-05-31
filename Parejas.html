@@ -1,0 +1,326 @@
+<html>
+	<head>
+		<script type="text/javascript">
+			times = 0;
+			numeroDeNombreA = 0;
+			numeroDeNombreB = 0;
+			numeroDeVidaA = 0;
+			numeroDeVidaB = 0;
+			function textBox() {
+				if(times < 1) {
+					document.getElementById("nombreCompletoA").value = "";
+					document.getElementById("nombreCompletoA").style.color = "black";
+					document.getElementById("nombreCompletoB").value = "";
+					document.getElementById("nombreCompletoB").style.color = "black";
+				}
+				times++;
+			}
+			function mostrarSumatoria(temp) {
+				var cadena = "";
+				for(x = 0; x < temp.length; x++) {
+					cadena += temp[x];
+					if (x != (temp.length - 1)) {
+						cadena += " + ";
+					}
+					else {
+						cadena += " = ";
+					}
+				}
+				return cadena;
+			}
+			function reducir(temp) {
+				var total = 0;
+				if(temp.length > 1) {
+					for(x = 0; x < temp.length; x++) {
+						total += Number(temp[x]);
+					}
+				}
+				else {
+					return temp;
+				}
+				return total;
+			}
+			function letrasANumeros(temp) {
+				var numeros = new Array();
+				temp = temp.toLowerCase();
+				for(x = 0; x < temp.length; x++) {
+					switch(temp.charAt(x)) {
+						case "a":
+						case "j":
+						case "s":
+							numeros[numeros.length] = 1;
+							break;
+						case "b":
+						case "k":
+						case "t":
+							numeros[numeros.length] = 2;
+							break;
+						case "c":
+						case "l":
+						case "u":
+							numeros[numeros.length] = 3;
+							break;
+						case "d":
+						case "m":
+						case "v":
+							numeros[numeros.length] = 4;
+							break;
+						case "e":
+						case "n":
+						case "w":
+							numeros[numeros.length] = 5;
+							break;
+						case "f":
+						case "o":
+						case "x":
+							numeros[numeros.length] = 6;
+							break;
+						case "g":
+						case "p":
+						case "y":
+							numeros[numeros.length] = 7;
+							break;
+						case "h":
+						case "q":
+						case "z":
+							numeros[numeros.length] = 8;
+							break;
+						case "i":
+						case "r":
+							numeros[numeros.length] = 9;
+							break;
+						default:
+							break;
+					}
+				}
+				return numeros;
+			}
+			function persona(temp, who) {
+				canvas.innerHTML += "<u>Numero de Nombre:</u> ";
+				var nombres = temp.split(" ");
+				var nombreCompleto = "";
+				for(x = 0; x < nombres.length; x++) {
+					nombreCompleto += nombres[x];
+				}
+				var rasgosTemp = letrasANumeros(nombreCompleto);
+				canvas.innerHTML += mostrarSumatoria(rasgosTemp);
+				var rasgosT = reducir(rasgosTemp);
+				canvas.innerHTML += "<b>" + rasgosT + "</b>";
+				for(;rasgosT > 9;) {
+					var temp = rasgosT.toString();
+					var tempArray = temp.split("");
+					rasgosT = reducir(tempArray);
+					canvas.innerHTML += "<b>/" + rasgosT + "</b>";
+				}
+				canvas.innerHTML += "<br>";
+				if(who == 0) {
+					numeroDeNombreA = rasgosT;
+				}
+				else if(who == 1) {
+					numeroDeNombreB = rasgosT;
+				}
+			}
+			function misionKarmica(tempd, tempm, tempa, who) {
+				canvas.innerHTML += "<u>Numero de Vida:</u> " + tempd;
+				for(;tempd.length > 1;) {
+					tempd = (reducir(tempd)).toString();
+					canvas.innerHTML += "/" + tempd;
+				}
+				canvas.innerHTML += " + " + tempm;
+				for(;tempm.length > 1;) {
+					tempm = (reducir(tempm)).toString();
+					canvas.innerHTML += "/" + tempm;
+				}
+				canvas.innerHTML += " + " + tempa;
+				for(;tempa.length > 1;) {
+					tempa = (reducir(tempa)).toString();
+					canvas.innerHTML += "/" + tempa;
+				}
+				canvas.innerHTML += " = ";
+				var temp = Number(tempd) + Number(tempm) + Number(tempa);
+				canvas.innerHTML += "<b>" + temp + "</b>";
+				temp = temp.toString();
+				for(;temp.length > 1;) {
+					temp = (reducir(temp)).toString();
+					canvas.innerHTML += "<b>/" + temp + "</b>";
+				}
+				if(who == 0) {
+					numeroDeVidaA = temp;
+				}
+				else if(who == 1) {
+					numeroDeVidaB = temp;
+				}
+			}
+			function Procesar() {
+				if(document.getElementById("nombreCompletoA").style.color == "gray") {
+					return;
+				}
+				if(document.getElementById("nombreCompletoB").style.color == "gray") {
+					return;
+				}
+				canvas = document.getElementById("canvas");
+
+				canvas.innerHTML = "<hr><align=center><b><u>Analisis de </u></b>";
+				var nombreCompletoA = document.getElementById("nombreCompletoA").value;
+				canvas.innerHTML += "<b><u>" + nombreCompletoA + "</u></b><br>";
+
+				persona(nombreCompletoA, 0);
+
+				var diaDeNacA = document.getElementById("diaA").selectedIndex;
+				diaDeNacA = document.getElementById("diaA").options[diaDeNacA].value;
+				var mesDeNacA = document.getElementById("mesA").selectedIndex;
+				mesDeNacA = document.getElementById("mesA").options[mesDeNacA].value;
+				var anoDeNacA = document.getElementById("anoA").selectedIndex;
+				anoDeNacA = document.getElementById("anoA").options[anoDeNacA].value;
+
+				misionKarmica(diaDeNacA, mesDeNacA, anoDeNacA, 0);
+
+				canvas.innerHTML += "<hr><align=center><b><u>Analisis de </u></b>";
+				var nombreCompletoB = document.getElementById("nombreCompletoB").value;
+				canvas.innerHTML += "<b><u>" + nombreCompletoB + "</u></b><br>";
+
+				persona(nombreCompletoB, 1);
+
+				var diaDeNacB = document.getElementById("diaB").selectedIndex;
+				diaDeNacB = document.getElementById("diaB").options[diaDeNacB].value;
+				var mesDeNacB = document.getElementById("mesB").selectedIndex;
+				mesDeNacB = document.getElementById("mesB").options[mesDeNacB].value;
+				var anoDeNacB = document.getElementById("anoB").selectedIndex;
+				anoDeNacB = document.getElementById("anoB").options[anoDeNacB].value;
+
+				misionKarmica(diaDeNacB, mesDeNacB, anoDeNacB, 1);
+
+				canvas.innerHTML += "<hr>";
+
+				canvas.innerHTML += "<align=center><b><u>Atraccion</u></b><br>";
+
+				if(numeroDeNombreA >= numeroDeNombreB) {
+					canvas.innerHTML += numeroDeNombreA + " - " + numeroDeNombreB + " = " + (numeroDeNombreA - numeroDeNombreB) + "<br>";
+				}
+				else {
+					canvas.innerHTML += numeroDeNombreB + " - " + numeroDeNombreA + " = " + (numeroDeNombreB - numeroDeNombreA) + "<br>";
+				}
+
+				canvas.innerHTML += "<align=center><b><u>Compatibilidad</u></b><br>";
+
+				if(numeroDeNombreA >= numeroDeVidaB) {
+					var comp1 = numeroDeNombreA - numeroDeVidaB;
+					canvas.innerHTML += numeroDeNombreA + " - " + numeroDeVidaB + " = " + comp1 + "<br>";
+				}
+				else {
+					var comp1 = numeroDeVidaB - numeroDeNombreA;
+					canvas.innerHTML += numeroDeVidaB + " - " + numeroDeNombreA + " = " + comp1 + "<br>";
+				}
+				if(numeroDeVidaA >= numeroDeNombreB) {
+					var comp2 = numeroDeVidaA - numeroDeNombreB;
+					canvas.innerHTML += numeroDeVidaA + " - " + numeroDeNombreB + " = " + comp2 + "<br>";
+				}
+				else {
+					var comp2 = numeroDeNombreB - numeroDeVidaA;
+					canvas.innerHTML += numeroDeNombreB + " - " + numeroDeVidaA + " = " + comp2 + "<br>";
+				}
+				canvas.innerHTML += (16 - comp1 - comp2) + "/" + 16 + "<hr>";
+				canvas.innerHTML += "Menor Interes<br>0 - relacion armonica (falta de interes = no relacion)<br>1 - relacion madura (falta de seguridad = relacion inmadura)<br>2 - relacion tolerante (falta comprension = relacion intolerante)<br>3 - relacion pasional (falta comunicacion = relacion agresiva)<br>4 - relacion constructiva (falta esfuerzo = relacion frustrante)<br>5 - relacion activa (falta energia y confianza = relacion sumisa)<br>6 - relacion pasional (falta atencion = relacion egoista)<br>7 - relacion admirativa (falta conocimiento o maduracion = relacion obsesiva)<br>8 - relacion fogosa (falta equilibrio = relacion superficial)<br>Mayor Interes<br><br>Nota: los numeros maestros pueden aburrirse de los numeros simples";
+			}
+		</script>
+		<title>Numerologia de Parejas</title>
+	</head>
+	<body>
+		<table align="center"border="0" width="800">
+			<tr align="center">
+				<td width="400">
+					<p style="font-size:20" style="text-decoration:bold">
+						Persona A
+					</p>
+				</td>
+				<td width="400">
+					<p style="font-size:20" style="text-decoration:bold">
+						Persona B
+					</p>
+				</td>
+			</tr>
+			<tr align="center">
+				<td colspan="2">
+					<p style="font-size:20" style="text-decoration:bold">
+						Nombre Completo
+					</p>
+				</td>
+			</tr>
+			<tr align="center">
+				<td>
+					<input type="text" onclick="textBox()" size="40" style="color:gray" value="Ej: Juan Jose Farina, Pablo Sanchez, Maria del Campo,etc." id="nombreCompletoA">
+				</td>
+				<td>
+					<input type="text" onclick="textBox()" size="40" style="color:gray" value="Ej: Juan Jose Farina, Pablo Sanchez, Maria del Campo,etc." id="nombreCompletoB">
+				</td>
+			</tr>
+			<tr align="center">
+				<td colspan="2">
+					<p style="font-size:20">
+						Fecha de Nacimiento
+					</p>
+				</td>
+			</tr>
+			<tr align="center">
+				<td>
+					Dia:
+					<script language="javascript">
+						document.write("<select id=diaA>");
+						for(x = 1; x < 32; x++) {
+							document.write("<option>" + x + "</option>");
+						}
+						document.write("</select>");
+					</script>
+					Mes:
+					<script language="javascript">
+						document.write("<select id=mesA>");
+						for(x = 1; x < 13; x++) {
+							document.write("<option>" + x + "</option>");
+						}
+						document.write("</select>");
+					</script>
+					Anio:
+					<script language="javascript">
+						document.write("<select id=anoA>");
+						for(x = 2015; x > 0; x--) {
+							document.write("<option>" + x + "</option>");
+						}
+						document.write("</select>");
+					</script>
+				</td>
+				<td>
+					Dia:
+					<script language="javascript">
+						document.write("<select id=diaB>");
+						for(x = 1; x < 32; x++) {
+							document.write("<option>" + x + "</option>");
+						}
+						document.write("</select>");
+					</script>
+					Mes:
+					<script language="javascript">
+						document.write("<select id=mesB>");
+						for(x = 1; x < 13; x++) {
+							document.write("<option>" + x + "</option>");
+						}
+						document.write("</select>");
+					</script>
+					Anio:
+					<script language="javascript">
+						document.write("<select id=anoB>");
+						for(x = 2015; x > 0; x--) {
+							document.write("<option>" + x + "</option>");
+						}
+						document.write("</select>");
+					</script>
+				</td>
+			</tr>
+			<tr align="center">
+				<td colspan="2">
+					<input type="button" value="Procesar" id="procesar()" onclick="Procesar()">
+				</td>
+			</tr>
+		</table>
+		<div align="center" id="canvas"></div>
+	</body>
+</html>
